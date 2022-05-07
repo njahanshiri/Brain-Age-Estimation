@@ -16,7 +16,7 @@
 
 Here is an implementation of ECNN model for the estimation brain age  based on MRI images. 
 For more detail about the project please use [this link](https://ieeexplore.ieee.org/document/9377399) to access the paper.
-[Pipeline](/images/ECNN.png)
+[Pipeline]("/images/ECNN.png")
 
 ## Requirement installation
 
