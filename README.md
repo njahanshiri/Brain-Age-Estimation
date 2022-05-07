@@ -25,6 +25,9 @@ conda env create -f environment.yml
 ## Dataset
 To train the proposed CNN networks, the Brain-Age Healthy Control (BAHC) dataset was used. This dataset contains 2001 Healthy individuals with a male/female ratio of 1016/985 with an average age of 18.12 ± 36.95 years. The age range of participants in this dataset is from 18 to 90 years. 
 
+## preprocessing 
+All T1-weighted MRI scans were preprocessed using the Statistical Parametric Mapping (SPM12) software package. First, all scans are segmented into gray matter (GM) and white matter (WM) and then normalized to the Montreal Neurological Institute 152 (MNI152) space using the DARTEL algorithm. DARTEL algorithm with parameter value of 1.5 mm3 has been used for data resampling and 4 mm3 has been used for smoothing.
+
 ## Train the model
 
 1. Run augement.py file for augment training data
