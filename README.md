@@ -20,7 +20,7 @@ For more detail about the project please use [this link](https://ieeexplore.ieee
 
 ## Requirement installation
 ```sh
-	conda env create -f environment.yml
+conda env create -f environment.yml
 ```
 ## Dataset
 To train the proposed CNN networks, the Brain-Age Healthy Control (BAHC) dataset was used. This dataset contains 2001 Healthy individuals with a male/female ratio of 1016/985 with an average age of 18.12 ± 36.95 years. The age range of participants in this dataset is from 18 to 90 years. 
@@ -30,8 +30,8 @@ All T1-weighted MRI scans were preprocessed using the Statistical Parametric Map
 
 ## Train the model
 
-1. Run augement.py file for augment training data
-2. Run ECNN_Train.py for train models
+* Run augement.py file for augment training data
+* Run ECNN_Train.py for train models
 
 ## Test the model
 
