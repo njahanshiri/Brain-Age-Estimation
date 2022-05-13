@@ -1,4 +1,4 @@
-from Utils import Util
+from utils.Utils import Util
 
 class SettingRepository:
     def __init__(self, data_provider, batch_size, num_sample, type_, data_type, ax_):

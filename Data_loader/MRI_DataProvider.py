@@ -1,5 +1,7 @@
-from Utils import Util
-from  MRI_metadata import MetaData
+import sys
+sys.path.insert(1, '/media/jsh/Data/age_estimation/age_estimation_code/code/')
+from utils.Utils import Util
+from  .MRI_metadata import MetaData
 import nibabel as nib
 import numpy as np
 import os
@@ -68,6 +70,7 @@ class BrainMRI_DataProvider():
                 batch_y.append(Age_Sample)
 
         batch_x = np.asarray(batch_x)
+        batch_y = np.asarray(batch_y)
         return batch_x, batch_y
 
     def get_test_3DCNN(self, data_type):
@@ -94,20 +97,19 @@ class BrainMRI_DataProvider():
 
         batch_x = np.expand_dims(batch_x, axis=-1)
         batch_x = np.asarray(batch_x)
+        batch_y = np.asarray(batch_y)
         return batch_x, batch_y
 
     def get_test_ECNN(self):
         Sagittal_gray, y = self.get_test_2DCNN("Gray", "Sagittal")
         Coronal_gray, _ = self.get_test_2DCNN("Gray", "Coronal")
         Axial_gray, _ = self.get_test_2DCNN("Gray", "Axial")
-
         Sagittal_White, _ = self.get_test_2DCNN("White", "Sagittal")
         Coronal_White, _ = self.get_test_2DCNN("White", "Coronal")
         Axial_White, _ = self.get_test_2DCNN("White", "Axial")
-
         gray_3DCNN, _ = self.get_test_3DCNN("Gray")
         White_3DCNN, _ = self.get_test_3DCNN("White")
-
+        y = np.asarray(y)
         return [Sagittal_gray, Axial_gray, Coronal_gray, Sagittal_White, Axial_White, Coronal_White, gray_3DCNN, White_3DCNN], y
 
 
@@ -174,6 +176,7 @@ class BrainMRI_DataProvider():
                 batch_y.append(Age_Sample)
 
         batch_x = np.asarray(batch_x)
+        batch_y = np.asarray(batch_y)
         return batch_x , batch_y
 
     def get_train_3DCNN(self, setting, index):
@@ -207,7 +210,7 @@ class BrainMRI_DataProvider():
             if setting.type_ == "train":
                 pth_ = opt.meta_data_train
             else:
-                pth_ = opt.meta_data_test
+                pth_ = opt.meta_data_valid
 
             Age_Sample = MRIMetaData.get_MetaData(pth_, ID)
             IDs = helper.get_list_files(os.path.join(pth, ID))
@@ -219,6 +222,7 @@ class BrainMRI_DataProvider():
 
         batch_x = np.expand_dims(batch_x, axis=-1)
         batch_x = np.asarray(batch_x)
+        batch_y = np.asarray(batch_y)
         return batch_x, batch_y
 
     def get_train_ECNN(self, setting, index):
@@ -288,6 +292,6 @@ class BrainMRI_DataProvider():
         gray_3DCNN = np.asarray(gray_3DCNN)
         White_3DCNN = np.expand_dims(White_3DCNN, axis=-1)
         White_3DCNN = np.asarray(White_3DCNN)
-
+        batch_y = np.asarray(batch_y)
         return [Sagittal_gray, Axial_gray, Coronal_gray, Sagittal_White, Axial_White, Coronal_White, gray_3DCNN,
                 White_3DCNN], batch_y

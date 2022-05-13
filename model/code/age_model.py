@@ -1,6 +1,6 @@
-from  age_model_2D import age_model_2DCNN
-from  age_model_3D import age_model_3DCNN
-from  age_model_ECNN import age_model_ECNN
+from  .age_model_2D import age_model_2DCNN
+from  .age_model_3D import age_model_3DCNN
+from  .age_model_ECNN import age_model_ECNN
 
 
 

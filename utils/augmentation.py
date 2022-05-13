@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(1, '/media/jsh/Data/age_estimation/age_estimation_code/code/')
 import transforms as tf
 from Utils import Util
 import numpy as np

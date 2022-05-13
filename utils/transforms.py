@@ -1,9 +1,3 @@
-###########################################################
-# DATA AUGMENTATION FUNCTIONS FOR 2-DIMENSIONAL IMAGES
-# author: r.robinson16@imperial.ac.uk
-# Part of the 'Data Augmentations for n-Dimensional Image
-# Input to CNNs' tutorial at https://mlnotebook.github.io
-###########################################################
 
 """
 For each function:

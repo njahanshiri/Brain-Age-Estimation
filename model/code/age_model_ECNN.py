@@ -1,13 +1,15 @@
+import sys
+sys.path.insert(1, '/media/jsh/Data/age_estimation/age_estimation_code/code/')
 from keras.callbacks import TensorBoard, ModelCheckpoint
 from keras.callbacks import CSVLogger
 from keras import backend as K
 from keras.models import Model
-from keras import optimizers
+from tensorflow.keras import optimizers
 from keras.layers import *
-import MRI_DataProvider
-from DataGenerator import DataGenerator
+from  Data_loader.MRI_DataProvider import BrainMRI_DataProvider
+from Data_loader.DataGenerator import DataGenerator
 from setting import SettingRepository
-from models import model_2D, model_3D
+from .models import model_2D, model_3D
 from opt import opt
 import os
 import math
@@ -20,19 +22,19 @@ import time
 class age_model_ECNN:
     def __init__(self, log_path):
 
-        self.data_provider = MRI_DataProvider.BrainMRI_DataProvider()
+        self.data_provider = BrainMRI_DataProvider()
         self.log(log_path)
 
 
     def log(self, log_path):
         self.CSV_logger = CSVLogger(os.path.join(log_path, "log.csv"), append=True,
                                     separator=';')
-        self.TensorBoard = TensorBoard(log_dir=log_path, batch_size=opt.batch_size_2D, update_freq='epoch')
+        self.TensorBoard = TensorBoard(log_dir=log_path,  update_freq='epoch')
         checkpoint_path = os.path.join(log_path,
                                        "ECNN.{epoch:02d}-{loss:.2f}.hdf5")
-        self.checkpoint = ModelCheckpoint(checkpoint_path, monitor='val_loss', verbose=0, save_best_only=True,
-                                          save_weights_only=False,
-                                          mode='auto', period=1)
+        self.checkpoint = ModelCheckpoint(checkpoint_path, monitor='val_loss', verbose=0, save_best_only=opt.save_best_only,
+                                          save_weights_only=opt.save_weights_only,
+                                          mode='auto')
 
     def coeff_determination(self, y_true, y_pred):
         SS_res = K.sum(K.square(y_true - y_pred))
@@ -143,7 +145,7 @@ class age_model_ECNN:
             self.model.load_weights(model_path)
         optimizer = optimizers.Adam(lr)
         self.model.compile(optimizer=optimizer, loss=loss,  metrics=["mae", "mse", self.coeff_determination])  # optimizer = adam
-        self.model.fit_generator(data_generator_Train, validation_data= data_generator_valid, validation_steps= STEP_SIZE_VALID, steps_per_epoch= STEP_SIZE_TRAIN, epochs= epochs, callbacks=[self.TensorBoard, self.checkpoint, self.CSV_logger])
+        self.model.fit(data_generator_Train, validation_data= data_generator_valid, validation_steps= STEP_SIZE_VALID, steps_per_epoch= STEP_SIZE_TRAIN, epochs= epochs, callbacks=[self.TensorBoard, self.checkpoint, self.CSV_logger])
 
 
     def evaluate(self, test_data, y_data, model_path=None):
